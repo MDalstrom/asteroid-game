@@ -6,7 +6,7 @@ using UnityEngine;
 public class KeyboardStratege : IHandlingStratege
 {
     public event Action ShootingPressed;
-    public event EventHandler<bool> MovingPressed;
+    public event Action MovingPressed;
     public event EventHandler<bool> RotationPressed;
 
     public void Update(GameObject player)
@@ -16,11 +16,7 @@ public class KeyboardStratege : IHandlingStratege
 
         if (Input.GetKeyDown(KeyCode.W) ||
             Input.GetKeyDown(KeyCode.UpArrow))
-            MovingPressed?.Invoke(this, true);
-
-        if (Input.GetKeyDown(KeyCode.S) ||
-            Input.GetKeyDown(KeyCode.DownArrow))
-            MovingPressed?.Invoke(this, false);
+            MovingPressed?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.D) ||
             Input.GetKeyDown(KeyCode.RightArrow))

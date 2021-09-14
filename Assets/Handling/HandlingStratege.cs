@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IHandlingStratege
 {
     event Action ShootingPressed;
-    event EventHandler<bool> MovingPressed;
+    event Action MovingPressed;
     event EventHandler<bool> RotationPressed;
 
     void Update(GameObject context);

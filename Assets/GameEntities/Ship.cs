@@ -18,9 +18,9 @@ public class Ship : MonoBehaviour
     {
         transform.Rotate(Vector3.one * _rotatingSpeed * (positive ? 1 : -1));
     }
-    public void AddAcceleration(bool positive)
+    public void AddAcceleration()
     {
-        _movingDirection += transform.up * _acceleration * (positive ? 1 : -1);
+        _movingDirection += transform.up * _acceleration;
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
 
