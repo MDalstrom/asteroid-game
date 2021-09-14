@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnEnable()
     {
-        _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime;
+        _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime * 2;
     }
     private void FixedUpdate()
     {

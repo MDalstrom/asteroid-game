@@ -19,6 +19,7 @@ public class Ship : MonoBehaviour
     /// just looks cool and was easy to make
     [SerializeField] private bool _needKnockback;
     [SerializeField] private float _knockbackForce;
+    [SerializeField] private Vector3 _bulletSpawnOffset;
     private float _lastShotTime;
 
     public void Shoot()
@@ -28,7 +29,7 @@ public class Ship : MonoBehaviour
             BulletsPool.Instance.Shoot(new BulletConfigurationDTO
             {
                 Color = Color.green,
-                Position = transform.position,
+                Position = transform.TransformDirection(_bulletSpawnOffset) + transform.position,
                 Direction = transform.up
             });
             _lastShotTime = Time.time;
@@ -59,6 +60,8 @@ public class Ship : MonoBehaviour
 [CanEditMultipleObjects]
 public class ShipEditor : Editor
 {
+    private Ship _ship;
+
     private SerializedProperty _maxSpeed;
     private SerializedProperty _rotatingSpeed;
     private SerializedProperty _acceleration;
@@ -67,11 +70,14 @@ public class ShipEditor : Editor
     private SerializedProperty _frictionalDecelerationRatio;
 
     private SerializedProperty _shootingCooldown;
+    private SerializedProperty _bulletSpawnOffset;
     private SerializedProperty _needKnockback;
     private SerializedProperty _knockbackForce;
 
     private void OnEnable()
     {
+        _ship = target as Ship;
+
         _maxSpeed = serializedObject.FindProperty("_maxSpeed");
         _rotatingSpeed = serializedObject.FindProperty("_rotatingSpeed");
         _acceleration = serializedObject.FindProperty("_acceleration");
@@ -80,13 +86,13 @@ public class ShipEditor : Editor
         _frictionalDecelerationRatio = serializedObject.FindProperty("_frictionalDecelerationRatio");
 
         _shootingCooldown = serializedObject.FindProperty("_shootingCooldown");
+        _bulletSpawnOffset = serializedObject.FindProperty("_bulletSpawnOffset");
         _needKnockback = serializedObject.FindProperty("_needKnockback");
         _knockbackForce = serializedObject.FindProperty("_knockbackForce");
     }
 
     public override void OnInspectorGUI()
     {
-        var ship = target as Ship;
         serializedObject.Update();
 
         EditorGUILayout.Space();
@@ -116,6 +122,8 @@ public class ShipEditor : Editor
         EditorGUILayout.PropertyField(_shootingCooldown);
         if (_shootingCooldown.floatValue < 0)
             _shootingCooldown.floatValue = 0;
+        var value = EditorGUILayout.Vector2Field("Bullet Spawn Offset", _bulletSpawnOffset.vector3Value);
+        _bulletSpawnOffset.vector3Value = new Vector3(value.x, value.y, _ship.transform.position.z);
         EditorGUILayout.PropertyField(_needKnockback);
         if (_needKnockback.boolValue)
         {
@@ -125,5 +133,9 @@ public class ShipEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+    private void OnSceneGUI()
+    {
+        Handles.DoPositionHandle(_ship.transform.position + _bulletSpawnOffset.vector3Value, Quaternion.identity);
     }
 }
