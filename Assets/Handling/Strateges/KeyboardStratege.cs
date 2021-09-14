@@ -14,16 +14,16 @@ public class KeyboardStratege : IHandlingStratege
         if (Input.GetKeyDown(KeyCode.Space))
             ShootingPressed?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.W) ||
-            Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W) ||
+            Input.GetKey(KeyCode.UpArrow))
             MovingPressed?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.D) ||
-            Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.RightArrow))
             RotationPressed?.Invoke(this, true);
 
-        if (Input.GetKeyDown(KeyCode.A) ||
-            Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) ||
+            Input.GetKey(KeyCode.LeftArrow))
             RotationPressed?.Invoke(this, false);
     }
 }
