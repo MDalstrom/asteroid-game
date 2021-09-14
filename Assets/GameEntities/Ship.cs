@@ -36,6 +36,8 @@ public class Ship : MonoBehaviour
     private void Update()
     {
         transform.position += _movingDirection;
+        if (_needFriction)
+            _movingDirection -= _movingDirection.normalized * _acceleration / _frictionalDecelerationRatio;
     }
 }
 
@@ -46,7 +48,6 @@ public class ShipEditor : Editor
     private SerializedProperty _maxSpeed;
     private SerializedProperty _rotatingSpeed;
     private SerializedProperty _acceleration;
-    private const float DecreasingCoef = 1000f;
 
     private SerializedProperty _needFriction;
     private SerializedProperty _frictionalDecelerationRatio;
@@ -98,7 +99,6 @@ public class ShipEditor : Editor
         if (_shootingCooldown.floatValue < 0)
             _shootingCooldown.floatValue = 0;
 
-        _acceleration.floatValue /= DecreasingCoef;
         serializedObject.ApplyModifiedProperties();
     }
 }

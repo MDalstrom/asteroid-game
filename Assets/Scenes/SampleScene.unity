@@ -250,6 +250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2249d8934d8e19e4685bb76ba88f4639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSpeed: 0.01
+  _rotatingSpeed: 0.75
+  _acceleration: 0.00025
+  _needFriction: 1
+  _frictionalDecelerationRatio: 5
+  _shootingCooldown: 0.3333
 --- !u!135 &626670514
 SphereCollider:
   m_ObjectHideFlags: 0
