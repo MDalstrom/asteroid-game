@@ -16,12 +16,26 @@ public class Ship : MonoBehaviour
     [SerializeField] private float _frictionalDecelerationRatio;
 
     [SerializeField] private float _shootingCooldown = 0.3333f;
+    /// just looks cool and was easy to make
+    [SerializeField] private bool _needKnockback;
+    [SerializeField] private float _knockbackForce;
     private float _lastShotTime;
 
     public void Shoot()
     {
         if ((Time.time - _lastShotTime) > _shootingCooldown)
-            BulletsPool.Instance.CreateBullet(transform.up.normalized);
+        {
+            BulletsPool.Instance.Shoot(new BulletConfigurationDTO
+            {
+                Color = Color.green,
+                Position = transform.position,
+                Direction = transform.up
+            });
+            _lastShotTime = Time.time;
+        }
+
+        if (_needKnockback)
+            _movingDirection -= transform.up * _knockbackForce;
     }
     public void Rotate(bool positive)
     {
@@ -29,7 +43,7 @@ public class Ship : MonoBehaviour
     }
     public void AddAcceleration()
     {
-        _movingDirection += transform.up.normalized * _acceleration;
+        _movingDirection += transform.up * _acceleration;
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
 
@@ -53,6 +67,8 @@ public class ShipEditor : Editor
     private SerializedProperty _frictionalDecelerationRatio;
 
     private SerializedProperty _shootingCooldown;
+    private SerializedProperty _needKnockback;
+    private SerializedProperty _knockbackForce;
 
     private void OnEnable()
     {
@@ -64,6 +80,8 @@ public class ShipEditor : Editor
         _frictionalDecelerationRatio = serializedObject.FindProperty("_frictionalDecelerationRatio");
 
         _shootingCooldown = serializedObject.FindProperty("_shootingCooldown");
+        _needKnockback = serializedObject.FindProperty("_needKnockback");
+        _knockbackForce = serializedObject.FindProperty("_knockbackForce");
     }
 
     public override void OnInspectorGUI()
@@ -98,6 +116,13 @@ public class ShipEditor : Editor
         EditorGUILayout.PropertyField(_shootingCooldown);
         if (_shootingCooldown.floatValue < 0)
             _shootingCooldown.floatValue = 0;
+        EditorGUILayout.PropertyField(_needKnockback);
+        if (_needKnockback.boolValue)
+        {
+            EditorGUILayout.PropertyField(_knockbackForce);
+            if (_knockbackForce.floatValue < 0)
+                _knockbackForce.floatValue = 0;
+        }
 
         serializedObject.ApplyModifiedProperties();
     }
