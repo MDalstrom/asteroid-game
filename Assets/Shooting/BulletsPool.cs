@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 public class BulletsPool : Singleton<BulletsPool>
@@ -8,39 +9,23 @@ public class BulletsPool : Singleton<BulletsPool>
     [SerializeField] private GameObject _bulletPrefab;
 
     private ObservableCollection<Bullet> _pool;
-    private int _activeBulletsCount;
 
     public void Shoot(BulletConfigurationDTO config)
     {
-        if (_activeBulletsCount == _pool.Count)
-            CreateBullet();
-        ActivateBullet(config);
+        if (_pool.FirstOrDefault(x => !x.gameObject.activeInHierarchy) is var bullet && bullet != null)
+            bullet.Initialize(config);
+        else
+            CreateBullet().Initialize(config);
     }
 
-    private void CreateBullet()
+    private Bullet CreateBullet()
     {
-        var bulletObject = Instantiate(_bulletPrefab);
+        var bulletObject = Instantiate(_bulletPrefab, transform);
         var bullet = bulletObject.GetComponent<Bullet>();
+        bulletObject.name = $"Bullet #{_pool.Count}";
 
-        bullet.Deinitialized += (s, e) => OnBulletDeinitialized(s as Bullet);
-
-        _pool.Insert(0, bullet);
-    }
-    private void ActivateBullet(BulletConfigurationDTO config)
-    {
-        if (_pool.Count == 0)
-            return;
-        _pool[0].Initialize(config);
-        _activeBulletsCount++;
-    }
-    private void OnBulletDeinitialized(Bullet sender)
-    {
-        MoveToStart(sender);
-        _activeBulletsCount--;
-    }
-    private void MoveToStart(Bullet subject)
-    {
-        _pool.Move(_pool.IndexOf(subject), 0);
+        _pool.Add(bullet);
+        return bullet;
     }
 
     private void Start()
