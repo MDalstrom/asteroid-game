@@ -47,7 +47,7 @@ public class Ship : MonoBehaviour
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.position += _movingDirection;
         if (_needFriction)

@@ -11,12 +11,16 @@ public struct BulletConfigurationDTO
 }
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _speed; 
+    [SerializeField] private float _speed;
+    private float _lifetime;
+    private Coroutine _selfDestroying;
 
     public event EventHandler Deinitialized;
+
     public void Initialize(BulletConfigurationDTO config)
     {
         gameObject.SetActive(true);
+        _selfDestroying = StartCoroutine(SelfDestroyingRoutine());
 
         GetComponent<MeshRenderer>().material.color = config.Color;
         transform.position = config.Position;
@@ -25,10 +29,24 @@ public class Bullet : MonoBehaviour
     public void Deinitialize()
     {
         gameObject.SetActive(false);
+        if (_selfDestroying != null)
+        {
+            StopCoroutine(_selfDestroying);
+            _selfDestroying = null;
+        }
+
         Deinitialized?.Invoke(this, null);
     }
-
-    private void Update()
+    private IEnumerator SelfDestroyingRoutine()
+    {
+        yield return new WaitForSeconds(_lifetime);
+        Deinitialize();
+    }
+    private void OnEnable()
+    {
+        _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime;
+    }
+    private void FixedUpdate()
     {
         transform.position += transform.up * _speed;
     }

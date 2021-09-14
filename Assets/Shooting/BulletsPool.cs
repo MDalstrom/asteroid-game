@@ -31,11 +31,12 @@ public class BulletsPool : Singleton<BulletsPool>
         if (_pool.Count == 0)
             return;
         _pool[0].Initialize(config);
-        
+        _activeBulletsCount++;
     }
     private void OnBulletDeinitialized(Bullet sender)
     {
         MoveToStart(sender);
+        _activeBulletsCount--;
     }
     private void MoveToStart(Bullet subject)
     {
