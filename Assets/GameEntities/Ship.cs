@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Ship : MonoBehaviour
+public class Ship : Viable
 {
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _rotatingSpeed;
@@ -62,6 +62,8 @@ public class ShipEditor : Editor
 {
     private Ship _ship;
 
+    private SerializedProperty _initialHealth;
+
     private SerializedProperty _maxSpeed;
     private SerializedProperty _rotatingSpeed;
     private SerializedProperty _acceleration;
@@ -77,6 +79,8 @@ public class ShipEditor : Editor
     private void OnEnable()
     {
         _ship = target as Ship;
+
+        _initialHealth = serializedObject.FindProperty("_initialHealth");
 
         _maxSpeed = serializedObject.FindProperty("_maxSpeed");
         _rotatingSpeed = serializedObject.FindProperty("_rotatingSpeed");
@@ -94,6 +98,10 @@ public class ShipEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Health", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_initialHealth);
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Moving", EditorStyles.boldLabel);
