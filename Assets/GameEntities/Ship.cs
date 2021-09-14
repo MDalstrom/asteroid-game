@@ -5,19 +5,22 @@ using UnityEditor;
 
 public class Ship : MonoBehaviour
 {
-    private float _maxSpeed;
-    private float _rotatingSpeed;
-    private float _acceleration;
-    private bool _needFriction;
-    private float _frictionalDecelerationRatio;
-    private const float ShootingCooldown = 0.3333f;
-
-    private float _lastShotTime;
+    [SerializeField] private float _maxSpeed;
+    [SerializeField] private float _rotatingSpeed;
+    [SerializeField] private float _acceleration;
     private Vector3 _movingDirection;
+
+    /// i know it's said there's no friction, but (for me) game seems unplayable without it
+    /// in addition, origin has friction
+    [SerializeField] private bool _needFriction;
+    [SerializeField] private float _frictionalDecelerationRatio;
+
+    [SerializeField] private float _shootingCooldown = 0.3333f;
+    private float _lastShotTime;
 
     public void Shoot()
     {
-        if ((Time.time - _lastShotTime) > ShootingCooldown)
+        if ((Time.time - _lastShotTime) > _shootingCooldown)
             BulletsPool.Instance.CreateBullet(transform.up.normalized);
     }
     public void Rotate(bool positive)
@@ -41,8 +44,61 @@ public class Ship : MonoBehaviour
 public class ShipEditor : Editor
 {
     private SerializedProperty _maxSpeed;
+    private SerializedProperty _rotatingSpeed;
+    private SerializedProperty _acceleration;
+    private const float DecreasingCoef = 1000f;
+
+    private SerializedProperty _needFriction;
+    private SerializedProperty _frictionalDecelerationRatio;
+
+    private SerializedProperty _shootingCooldown;
+
     private void OnEnable()
     {
-        serializedObject.FindProperty    
+        _maxSpeed = serializedObject.FindProperty("_maxSpeed");
+        _rotatingSpeed = serializedObject.FindProperty("_rotatingSpeed");
+        _acceleration = serializedObject.FindProperty("_acceleration");
+
+        _needFriction = serializedObject.FindProperty("_needFriction");
+        _frictionalDecelerationRatio = serializedObject.FindProperty("_frictionalDecelerationRatio");
+
+        _shootingCooldown = serializedObject.FindProperty("_shootingCooldown");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        var ship = target as Ship;
+        serializedObject.Update();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Moving", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_maxSpeed);
+        if (_maxSpeed.floatValue < 0)
+            _maxSpeed.floatValue = 0;
+        EditorGUILayout.PropertyField(_rotatingSpeed);
+        if (_rotatingSpeed.floatValue < 0)
+            _rotatingSpeed.floatValue = 0;
+        EditorGUILayout.PropertyField(_acceleration);
+        if (_acceleration.floatValue < 0 || _acceleration.floatValue > _maxSpeed.floatValue)
+            _acceleration.floatValue = Mathf.Clamp(_acceleration.floatValue, 0, _maxSpeed.floatValue);
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Friction", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_needFriction);
+        if (_needFriction.boolValue)
+        {
+            EditorGUILayout.PropertyField(_frictionalDecelerationRatio);
+            if (_frictionalDecelerationRatio.floatValue < 1)
+                _frictionalDecelerationRatio.floatValue = 1;
+        }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Shooting", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_shootingCooldown);
+        if (_shootingCooldown.floatValue < 0)
+            _shootingCooldown.floatValue = 0;
+
+        _acceleration.floatValue /= DecreasingCoef;
+        serializedObject.ApplyModifiedProperties();
     }
 }
