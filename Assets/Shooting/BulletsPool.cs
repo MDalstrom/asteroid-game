@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class BulletsPool : Singleton<BulletsPool>
     [Tooltip("Prefab must be saved in the deinitialized state")]
     [SerializeField] private GameObject _bulletPrefab;
 
-    private ObservableCollection<Bullet> _pool;
+    private List<Bullet> _pool;
 
     public void Shoot(BulletConfigurationDTO config)
     {
@@ -30,6 +29,6 @@ public class BulletsPool : Singleton<BulletsPool>
 
     private void Start()
     {
-        _pool = new ObservableCollection<Bullet>();
+        _pool = new List<Bullet>();
     }
 }
