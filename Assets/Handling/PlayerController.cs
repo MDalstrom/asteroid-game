@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-    private Ship _player;
+    [SerializeField] private Ship _player;
     private IHandlingStratege _stratege;
 
     public void ChangeHandlingStratege(string strategeName)
@@ -33,6 +33,10 @@ public class PlayerController : MonoBehaviour
         _player.Shoot();
     }
 
+    private void Start()
+    {
+        ChangeHandlingStratege(new KeyboardStratege());
+    }
     private void Update()
     {
         _stratege.Update(_player.gameObject);
