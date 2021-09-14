@@ -20,13 +20,13 @@ public class PlayerController : MonoBehaviour
         _stratege.ShootingPressed += OnShootingPressed;
     }
 
-    private void OnMovingPressed(object sender, PositiveEventArgs e)
+    private void OnMovingPressed(object sender, bool isPositive)
     {
-        _player.AddAcceleration(e.IsPositive);
+        _player.AddAcceleration(isPositive);
     }
-    private void OnRotationPressed(object sender, PositiveEventArgs e)
+    private void OnRotationPressed(object sender, bool isPositive)
     {
-        _player.Rotate(e.IsPositive);
+        _player.Rotate(isPositive);
     }
     private void OnShootingPressed()
     {
