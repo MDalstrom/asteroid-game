@@ -48,7 +48,7 @@ public abstract class Spawner<T> : MonoBehaviour
         else
             return GetCustomPos();
     }
-    protected abstract Vector2 GetCustomPos();
+    protected virtual Vector2 GetCustomPos() => throw new System.Exception($"Choose at least one spawn option of the spawner {this}");
 
     private static int RollPlusOrMinus()
     {
