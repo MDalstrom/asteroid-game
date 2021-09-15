@@ -11,7 +11,7 @@ public abstract class Capable : MonoBehaviour
     {
         _modifications.ForEach(x => x.Modify());
     }
-    private void Start()
+    protected virtual void Start()
     {
         _modifications = GetComponents<IModification>().Where(x => {
             var generics = x.GetType().GetGenericArguments();

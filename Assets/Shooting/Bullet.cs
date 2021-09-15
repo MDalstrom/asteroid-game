@@ -9,7 +9,7 @@ public struct BulletConfigurationDTO
     public Vector2 Position;
     public Vector2 Direction;
     public Color Color;
-    public ScoreHolder Source;
+    public GameObject Source;
 }
 public class Bullet : MonoBehaviour
 {
@@ -28,7 +28,8 @@ public class Bullet : MonoBehaviour
         GetComponent<MeshRenderer>().material.color = config.Color;
         transform.position = config.Position;
         transform.up = config.Direction;
-        _source = config.Source;
+        if (config.Source != null)
+            _source = config.Source.GetComponent<ScoreHolder>();
     }
     public void Deinitialize()
     {
@@ -56,7 +57,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        var viable = collision.collider.GetComponent<HealthHolder>();
+        var viable = collision.collider.GetComponent<Viable>();
         if (viable == null && viable == _source)
             return;
 
