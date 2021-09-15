@@ -7,7 +7,7 @@ public class KeyboardStratege : IHandlingStratege
 {
     public event Action ShootingPressed;
     public event Action MovingPressed;
-    public event EventHandler<bool> RotationPressed;
+    public event EventHandler<float> RotationPressed;
 
     public void Update(GameObject player)
     {
@@ -20,10 +20,10 @@ public class KeyboardStratege : IHandlingStratege
 
         if (Input.GetKey(KeyCode.D) ||
             Input.GetKey(KeyCode.RightArrow))
-            RotationPressed?.Invoke(this, true);
+            RotationPressed?.Invoke(this, float.MaxValue);
 
         if (Input.GetKey(KeyCode.A) ||
             Input.GetKey(KeyCode.LeftArrow))
-            RotationPressed?.Invoke(this, false);
+            RotationPressed?.Invoke(this, float.MinValue);
     }
 }

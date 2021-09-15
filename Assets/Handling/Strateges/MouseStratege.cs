@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class MouseStratege : IHandlingStratege
 {
+    public MouseStratege()
+    {
+        _camera = Camera.main;
+    }
+
     public event Action ShootingPressed;
     public event Action MovingPressed;
-    public event EventHandler<bool> RotationPressed;
+    public event EventHandler<float> RotationPressed;
+    private Camera _camera;
 
     public void Update(GameObject context)
     {
@@ -15,7 +21,7 @@ public class MouseStratege : IHandlingStratege
             Input.GetMouseButtonDown(0))
             ShootingPressed?.Invoke();
 
-        /**/
+        context.transform.LookAt(_camera.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
         if (Input.GetKey(KeyCode.W) ||
             Input.GetKey(KeyCode.UpArrow) ||

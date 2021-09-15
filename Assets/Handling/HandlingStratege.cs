@@ -7,7 +7,7 @@ public interface IHandlingStratege
 {
     event Action ShootingPressed;
     event Action MovingPressed;
-    event EventHandler<bool> RotationPressed;
+    event EventHandler<float> RotationPressed;
 
     void Update(GameObject context);
 }

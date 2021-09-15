@@ -24,9 +24,9 @@ public class PlayerController : Singleton<PlayerController>
     {
         _player.AddAcceleration();
     }
-    private void OnRotationPressed(object sender, bool isPositive)
+    private void OnRotationPressed(object sender, float angle)
     {
-        _player.Rotate(isPositive);
+        _player.Rotate(angle);
     }
     private void OnShootingPressed()
     {
@@ -35,7 +35,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Start()
     {
-        ChangeHandlingStratege(new KeyboardStratege());
+        ChangeHandlingStratege(new MouseStratege());
     }
     private void Update()
     {

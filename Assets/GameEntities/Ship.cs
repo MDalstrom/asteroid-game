@@ -32,7 +32,7 @@ public class Ship : Viable
             BulletsPool.Instance.Shoot(new BulletConfigurationDTO
             {
                 Color = Color.green,
-                Position = transform.TransformDirection(_bulletSpawnOffset) + transform.position,
+                Position = transform.TransformDirection(_bulletSpawnOffset).normalized + transform.position,
                 Direction = transform.up,
                 Source = _scoreHolder
             });
@@ -42,9 +42,9 @@ public class Ship : Viable
         if (_needKnockback)
             _movingDirection -= transform.up * _knockbackForce;
     }
-    public void Rotate(bool positive)
+    public void Rotate(float angle)
     {
-        transform.Rotate(Vector3.back * _rotatingSpeed * (positive ? 1 : -1));
+        transform.Rotate(Vector3.back * Mathf.Clamp(angle, -_rotatingSpeed, _rotatingSpeed));
     }
     public void AddAcceleration()
     {
