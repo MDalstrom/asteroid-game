@@ -23,6 +23,11 @@ public abstract class Viable : MonoBehaviour
         }
         return false;
     }
+    public void DamageToDeath()
+    {
+        while (!Damage())
+            continue;
+    }
     protected virtual void OnDie()
     {
         Dead?.Invoke(this, _deadEventArgs);

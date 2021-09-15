@@ -54,4 +54,11 @@ public class Rock : Viable
     {
         transform.position += transform.up * _speed;
     }
+    protected override void OnViableCollided(Viable otherViable, Collision collision)
+    {
+        if (otherViable is Rock)
+            return;
+        _particlesCount = 0;
+        DamageToDeath();
+    }
 }

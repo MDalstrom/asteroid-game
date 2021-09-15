@@ -58,12 +58,11 @@ public class Bullet : MonoBehaviour
         if (collision.collider.gameObject == _source)
             return;
 
+        Deinitialize();
         if (collision.collider.GetComponent<Viable>() is var viable && viable != null)
         {
             if (viable.Damage())
                 _source?.Transfer(collision.collider.GetComponent<ScoreHolder>());
         }
-
-        Deinitialize();
     }
 }

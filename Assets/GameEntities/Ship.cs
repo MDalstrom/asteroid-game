@@ -52,9 +52,10 @@ public class Ship : Viable
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
 
-    protected override void OnViableCollided(Viable otherViable)
+    protected override void OnViableCollided(Viable otherViable, Collision collision)
     {
         Damage();
+        _movingDirection -= (collision.contacts[0].point - transform.position) * _knockbackForce;
     }
 
     protected override void Start()

@@ -15,7 +15,9 @@ public class UFO : Viable
     {
         transform.position += _movementDirection;
     }
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnViableCollided(Viable otherViable, Collision collision)
     {
+        if (otherViable is Rock)
+            DamageToDeath();
     }
 }
