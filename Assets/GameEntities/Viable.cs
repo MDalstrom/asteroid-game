@@ -4,8 +4,9 @@ using UnityEngine;
 public abstract class Viable : MonoBehaviour
 {
     [SerializeField] private int _initialHealth;
+    protected EventArgs _deadEventArgs;
     public int Health { get; protected set; }
-    public event EventHandler Dead;
+    public event EventHandler<EventArgs> Dead;
     protected virtual void Start()
     {
         Health = _initialHealth;
@@ -18,6 +19,7 @@ public abstract class Viable : MonoBehaviour
     }
     protected virtual void OnDie()
     {
-        Dead?.Invoke(this, null);
+        Dead?.Invoke(this, _deadEventArgs);
+        Destroy(gameObject);
     }
 }

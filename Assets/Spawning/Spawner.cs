@@ -13,19 +13,18 @@ public abstract class Spawner<T> : MonoBehaviour
     private float _maxHeight;
     private float _maxWidth;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         var camera = Camera.main;
-        _maxHeight = camera.orthographicSize;
-        _maxWidth = Screen.width * camera.orthographicSize / Screen.height;
+        _maxHeight = camera.orthographicSize * _heightPercentage;
+        _maxWidth = Screen.width * camera.orthographicSize / Screen.height * _widthPercentage;
     }
     protected virtual T Spawn()
     {
         var targetObject = Instantiate(_prefab);
-        var target = targetObject.GetComponent<T>();
-
         targetObject.transform.position = GetRandomPos();
 
+        var target = targetObject.GetComponent<T>();
         return target;
     }
 
