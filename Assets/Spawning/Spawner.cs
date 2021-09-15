@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Spawner<T> : MonoBehaviour
 {
     [SerializeField] protected GameObject _prefab;
-    [Header("Spawn settings")]
+    [Header("Spawn Settings")]
     [SerializeField] private bool _needSpawnOnWidth;
     [SerializeField] [Range(0f, 1f)] private float _widthPercentage;
     [SerializeField] private bool _needSpawnOnHeight;
@@ -31,22 +31,37 @@ public abstract class Spawner<T> : MonoBehaviour
 
     private Vector2 GetRandomPos()
     {
-        if (_needSpawnOnWidth && IsProbably(0.5f))
+        if (_needSpawnOnHeight && _needSpawnOnWidth)
         {
-            return new Vector2(
-                Random.Range(-_maxWidth, _maxWidth),
-                _maxHeight * RollPlusOrMinus()
-                );
+            if (IsProbably(0.5f))
+                return GetPosOnWidth();
+            else 
+                return GetPosOnHeight();
         }
-        else if (_needSpawnOnHeight && IsProbably(0.5f))
+        else if (_needSpawnOnWidth)
         {
-            return new Vector2(
-                _maxWidth * RollPlusOrMinus(),
-                Random.Range(-_maxHeight, _maxHeight)
-                );
+            return GetPosOnWidth();
+        }
+        else if (_needSpawnOnHeight)
+        {
+            return GetPosOnHeight();
         }
         else
             return GetCustomPos();
+    }
+    private Vector2 GetPosOnHeight()
+    {
+        return new Vector2(
+                _maxWidth * RollPlusOrMinus(),
+                Random.Range(-_maxHeight, _maxHeight)
+                );
+    }
+    private Vector2 GetPosOnWidth()
+    {
+        return new Vector2(
+                    Random.Range(-_maxWidth, _maxWidth),
+                    _maxHeight * RollPlusOrMinus()
+                    );
     }
     protected virtual Vector2 GetCustomPos() => throw new System.Exception($"Choose at least one spawn option of the spawner {this}");
 

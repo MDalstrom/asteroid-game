@@ -4,6 +4,7 @@ using UnityEngine;
 
 public sealed class UFOSpawner : Spawner<UFO>
 {
+    [Header("Timing Settings")]
     [SerializeField] [Min(0)] private float _maxCooldown = 40f;
     [SerializeField] [Min(0)] private float _minCooldown = 20f;
     private float _nextCooldown;
@@ -16,7 +17,7 @@ public sealed class UFOSpawner : Spawner<UFO>
     {
         GenerateCooldown();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (Time.time - _lastMeasuredTime > _nextCooldown)
         {

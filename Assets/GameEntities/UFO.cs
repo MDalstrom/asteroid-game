@@ -10,6 +10,7 @@ public class UFO : Viable
     {
         base.Start();
         _movementDirection = Vector2.right * _speed * ((Random.Range(0f, 1f) > 0.5f) ? 1 : (-1));
+        Invoke("Damage", 2);
     }
     private void FixedUpdate()
     {
