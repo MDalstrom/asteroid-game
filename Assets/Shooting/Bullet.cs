@@ -8,12 +8,14 @@ public struct BulletConfigurationDTO
     public Vector2 Position;
     public Vector2 Direction;
     public Color Color;
+    public ScoreHolder Source;
 }
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
     private float _lifetime;
     private Coroutine _selfDestroying;
+    private ScoreHolder _source;
 
     public event EventHandler Deinitialized;
 
@@ -25,6 +27,7 @@ public class Bullet : MonoBehaviour
         GetComponent<MeshRenderer>().material.color = config.Color;
         transform.position = config.Position;
         transform.up = config.Direction;
+        _source = config.Source;
     }
     public void Deinitialize()
     {
@@ -49,5 +52,18 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += transform.up * _speed;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject == _source)
+            return;
+
+        if (collision.collider.GetComponent<Viable>() is var viable && viable != null)
+        {
+            if (viable.Damage())
+                _source?.Transfer(collision.collider.GetComponent<ScoreHolder>());
+        }
+
+        Deinitialize();
     }
 }

@@ -15,4 +15,7 @@ public class UFO : Viable
     {
         transform.position += _movementDirection;
     }
+    protected override void OnCollisionEnter(Collision collision)
+    {
+    }
 }

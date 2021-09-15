@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5528440331840831012}
   - component: {fileID: 5528440331840831013}
   - component: {fileID: 5528440331840831014}
+  - component: {fileID: 644434128916948253}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -109,12 +110,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2249d8934d8e19e4685bb76ba88f4639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 0.01
+  _initialHealth: 5
+  _maxSpeed: 0.1
   _rotatingSpeed: 0.75
-  _acceleration: 0.00025
+  _acceleration: 0.001
   _needFriction: 1
   _frictionalDecelerationRatio: 5
   _shootingCooldown: 0.3333
+  _needKnockback: 0
+  _knockbackForce: 0.005
+  _bulletSpawnOffset: {x: 0, y: 0.75, z: 0}
+--- !u!114 &644434128916948253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5528440331840831015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f9aa91c28063c044bb36cab17e1803d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worth: 0
+  _wealth: 0
 --- !u!1 &5528440332163321118
 GameObject:
   m_ObjectHideFlags: 0

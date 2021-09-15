@@ -403,7 +403,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1294175217
 MonoBehaviour:
@@ -477,7 +477,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5528440331840831010, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831010, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: m_LocalPosition.x
@@ -529,7 +529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831014, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: _needFriction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831014, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: _initialHealth
@@ -549,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831014, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: _frictionalDecelerationRatio
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831015, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: m_Name

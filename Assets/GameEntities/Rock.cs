@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class Rock : Viable
 {
+    public class DeadEventArgs : EventArgs
+    {
+        public Rock[] Particles { get; set; }
+    }
     [Header("Particles")]
     [SerializeField] private GameObject _particlePrefab;
     [SerializeField] [Min(0)] private int _particlesCount;
@@ -18,19 +22,19 @@ public class Rock : Viable
 
     public void SelfConfigure()
     {
-        FlightDirection = UnityEngine.Random.insideUnitCircle * _speed;
+        FlightDirection = UnityEngine.Random.insideUnitCircle;
         _speed = GetRandomSpeed();
     }
     protected override void OnDie()
     {
+        var particles = new Rock[_particlesCount];
         if (_particlePrefab != null)
         {
             var mutualSpeed = GetRandomSpeed();
-            var particles = new Rock[_particlesCount];
             for (int i = 0; i < _particlesCount; i++)
-                particles[i].CreateParticle(mutualSpeed, _spreadingAngle * ((i % 2 == 0) ? 1 : (-1)));
-            _deadEventArgs = new DeadEventArgs { Particles = particles };
+                particles[i] = CreateParticle(mutualSpeed, _spreadingAngle * ((i % 2 == 0) ? 1 : (-1)));
         }
+        _deadEventArgs = new DeadEventArgs { Particles = particles };
         base.OnDie();
     }
     private float GetRandomSpeed()
@@ -45,8 +49,9 @@ public class Rock : Viable
         rock.FlightDirection = Quaternion.AngleAxis(angle, Vector3.forward) * transform.up;
         return rock;
     }
-    public class DeadEventArgs : EventArgs
+
+    private void FixedUpdate()
     {
-        public Rock[] Particles { get; set; }
+        transform.position += transform.up * _speed;
     }
 }

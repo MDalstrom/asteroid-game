@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[RequireComponent(typeof(ScoreHolder))]
 public class Ship : Viable
 {
     [SerializeField] private float _maxSpeed;
@@ -13,7 +14,7 @@ public class Ship : Viable
     /// i know it's said there's no friction, but (for me) game seems unplayable without it
     /// in addition, origin has friction
     [SerializeField] private bool _needFriction;
-    [SerializeField] private float _frictionalDecelerationRatio;
+    [SerializeField] private float _frictionalDeceleration;
 
     [SerializeField] private float _shootingCooldown = 0.3333f;
     /// just looks cool and was easy to make
@@ -21,6 +22,8 @@ public class Ship : Viable
     [SerializeField] private float _knockbackForce;
     [SerializeField] private Vector3 _bulletSpawnOffset;
     private float _lastShotTime;
+
+    private ScoreHolder _scoreHolder;
 
     public void Shoot()
     {
@@ -30,7 +33,8 @@ public class Ship : Viable
             {
                 Color = Color.green,
                 Position = transform.TransformDirection(_bulletSpawnOffset) + transform.position,
-                Direction = transform.up
+                Direction = transform.up,
+                Source = _scoreHolder
             });
             _lastShotTime = Time.time;
         }
@@ -48,11 +52,21 @@ public class Ship : Viable
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
 
+    protected override void OnViableCollided(Viable otherViable)
+    {
+        Damage();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _scoreHolder = GetComponent<ScoreHolder>();
+    }
     private void FixedUpdate()
     {
         transform.position += _movingDirection;
         if (_needFriction)
-            _movingDirection -= _movingDirection.normalized * _acceleration / _frictionalDecelerationRatio;
+            _movingDirection -= _movingDirection.normalized * _frictionalDeceleration;
     }
 }
 
@@ -69,7 +83,7 @@ public class ShipEditor : Editor
     private SerializedProperty _acceleration;
 
     private SerializedProperty _needFriction;
-    private SerializedProperty _frictionalDecelerationRatio;
+    private SerializedProperty _frictionalDeceleration;
 
     private SerializedProperty _shootingCooldown;
     private SerializedProperty _bulletSpawnOffset;
@@ -87,7 +101,7 @@ public class ShipEditor : Editor
         _acceleration = serializedObject.FindProperty("_acceleration");
 
         _needFriction = serializedObject.FindProperty("_needFriction");
-        _frictionalDecelerationRatio = serializedObject.FindProperty("_frictionalDecelerationRatio");
+        _frictionalDeceleration = serializedObject.FindProperty("_frictionalDeceleration");
 
         _shootingCooldown = serializedObject.FindProperty("_shootingCooldown");
         _bulletSpawnOffset = serializedObject.FindProperty("_bulletSpawnOffset");
@@ -120,9 +134,9 @@ public class ShipEditor : Editor
         EditorGUILayout.PropertyField(_needFriction);
         if (_needFriction.boolValue)
         {
-            EditorGUILayout.PropertyField(_frictionalDecelerationRatio);
-            if (_frictionalDecelerationRatio.floatValue < 1)
-                _frictionalDecelerationRatio.floatValue = 1;
+            EditorGUILayout.PropertyField(_frictionalDeceleration);
+            if (_frictionalDeceleration.floatValue < 0)
+                _frictionalDeceleration.floatValue = 0;
         }
 
         EditorGUILayout.Space();
@@ -141,9 +155,5 @@ public class ShipEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
-    }
-    private void OnSceneGUI()
-    {
-        Handles.DoPositionHandle(_ship.transform.position + _bulletSpawnOffset.vector3Value, Quaternion.identity);
     }
 }
