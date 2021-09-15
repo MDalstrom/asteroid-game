@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public struct BulletConfigurationDTO
 {
@@ -55,14 +56,15 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject == _source)
+        var viable = collision.collider.GetComponent<HealthHolder>();
+        if (viable == null && viable == _source)
             return;
 
+        viable.Damage();
+        if (_source != null &&
+            viable.GetComponent<ScoreHolder>() is var scoreHolder && scoreHolder != null)
+            _source.Transfer(scoreHolder);
+
         Deinitialize();
-        if (collision.collider.GetComponent<Viable>() is var viable && viable != null)
-        {
-            if (viable.Damage())
-                _source?.Transfer(collision.collider.GetComponent<ScoreHolder>());
-        }
     }
 }

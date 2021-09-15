@@ -23,6 +23,11 @@ public class Ship : Viable
     [SerializeField] private Vector3 _bulletSpawnOffset;
     private float _lastShotTime;
 
+    private Renderer _renderer;
+    private Color _defaultColor;
+    private bool _isInvincible = true;
+    [SerializeField] private float _blinkingFrequency = 0.5f;
+
     private ScoreHolder _scoreHolder;
 
     public void Shoot()
@@ -51,7 +56,13 @@ public class Ship : Viable
         _movingDirection += transform.up * _acceleration;
         _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
-
+    public override bool Damage()
+    {
+        if (_isInvincible)
+            return false;
+        else
+            return base.Damage();
+    }
     protected override void OnViableCollided(Viable otherViable, Collision collision)
     {
         Damage();
@@ -62,12 +73,23 @@ public class Ship : Viable
     {
         base.Start();
         _scoreHolder = GetComponent<ScoreHolder>();
+        _renderer = GetComponent<Renderer>();
+        _defaultColor = _renderer.material.color;
     }
     private void FixedUpdate()
     {
         transform.position += _movingDirection;
         if (_needFriction)
             _movingDirection -= _movingDirection.normalized * _frictionalDeceleration;
+
+        if (_isInvincible)
+        {
+            _renderer.material.color = new Color(_defaultColor.r, _defaultColor.g, _defaultColor.b, 0f);
+            if (Time.time % _blinkingFrequency > _blinkingFrequency / 2f)
+                _renderer.material.color = _defaultColor;
+            else
+                _renderer.material.color = new Color(_defaultColor.r, _defaultColor.g, _defaultColor.b, 0f);
+        }
     }
 }
 
@@ -114,9 +136,13 @@ public class ShipEditor : Editor
     {
         serializedObject.Update();
 
+        ///
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Health", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_initialHealth);
+
+        ///
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Moving", EditorStyles.boldLabel);
@@ -130,6 +156,8 @@ public class ShipEditor : Editor
         if (_acceleration.floatValue < 0 || _acceleration.floatValue > _maxSpeed.floatValue)
             _acceleration.floatValue = Mathf.Clamp(_acceleration.floatValue, 0, _maxSpeed.floatValue);
 
+        ///
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Friction", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(_needFriction);
@@ -140,13 +168,18 @@ public class ShipEditor : Editor
                 _frictionalDeceleration.floatValue = 0;
         }
 
+        ///
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Shooting", EditorStyles.boldLabel);
+
         EditorGUILayout.PropertyField(_shootingCooldown);
         if (_shootingCooldown.floatValue < 0)
             _shootingCooldown.floatValue = 0;
+
         var value = EditorGUILayout.Vector2Field("Bullet Spawn Offset", _bulletSpawnOffset.vector3Value);
         _bulletSpawnOffset.vector3Value = new Vector3(value.x, value.y, _ship.transform.position.z);
+
         EditorGUILayout.PropertyField(_needKnockback);
         if (_needKnockback.boolValue)
         {
