@@ -16,8 +16,8 @@ public abstract class Spawner<T> : MonoBehaviour
     protected virtual void Awake()
     {
         var camera = Camera.main;
-        _maxHeight = camera.orthographicSize * _heightPercentage;
-        _maxWidth = Screen.width * camera.orthographicSize / Screen.height * _widthPercentage;
+        _maxHeight = camera.orthographicSize;
+        _maxWidth = Screen.width * camera.orthographicSize / Screen.height;
     }
     protected virtual T Spawn()
     {
@@ -52,13 +52,13 @@ public abstract class Spawner<T> : MonoBehaviour
     {
         return new Vector2(
                 _maxWidth * RollPlusOrMinus(),
-                Random.Range(-_maxHeight, _maxHeight)
+                Random.Range(-_maxHeight, _maxHeight) * _heightPercentage
                 );
     }
     private Vector2 GetPosOnWidth()
     {
         return new Vector2(
-                    Random.Range(-_maxWidth, _maxWidth),
+                    Random.Range(-_maxWidth, _maxWidth) * _widthPercentage,
                     _maxHeight * RollPlusOrMinus()
                     );
     }
