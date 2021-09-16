@@ -16,17 +16,20 @@ public class Bullet : SelfDestroyingPoolObject
 
     [SerializeField] private float _speed; 
     private Moving _moving;
+    private Renderer _renderer;
 
     public override void Configure(PoolObjectConfiguration commonConfig)
     {
         var config = commonConfig as Configuration;
         transform.position = config.Position;
         _moving.MovingDirection = config.Direction * _speed;
+        _renderer.material.color = config.Color;
     }
 
     private void Awake()
     {
         _moving = GetComponent<Moving>();
+        _renderer = GetComponent<Renderer>();
         _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime * 2;
     }
 }

@@ -9,7 +9,7 @@ public class HealthDisplay : MonoBehaviour
     [SerializeField] private Health _target;
     private List<GameObject> _hearts;
 
-    private void Start()
+    private void Awake()
     {
         _hearts = new List<GameObject>();
         _target.ValueChanged += OnHealthChanged;
@@ -21,6 +21,8 @@ public class HealthDisplay : MonoBehaviour
     }
     private void RemoveHeart()
     {
+        if (_hearts.Count == 0)
+            return;
         var last = _hearts.Last();
         Destroy(last);
         _hearts.Remove(last);
@@ -28,8 +30,8 @@ public class HealthDisplay : MonoBehaviour
     private void OnHealthChanged(object sender, int e)
     {
         while (e > _hearts.Count)
-            RemoveHeart();
-        while (e < _hearts.Count)
             AddHeart();
+        while (e < _hearts.Count)
+            RemoveHeart();
     }
 }

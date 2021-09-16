@@ -34,4 +34,8 @@ public class Health : MonoBehaviour
         }
         return false;
     }
+    private void Start()
+    {
+        Regen();
+    }
 }
