@@ -9,17 +9,25 @@ public abstract class Pool<T> : MonoBehaviour where T : PoolObject
 
     public virtual T Spawn(PoolObjectConfiguration config)
     {
-        var spawned = GetAvailableObject();
+        if (config == null)
+            throw new System.Exception($"{GetType()}'s configuration cannot be null");
+
+        var spawned = GetAvailableObject(out var isNew);
+        config.IsNew = isNew;
         spawned.Configure(config);
         spawned.Spawn();
         return spawned;
     }
 
-    private T GetAvailableObject()
+    private T GetAvailableObject(out bool isNew)
     {
         var first = _list.FirstOrDefault(x => !x.gameObject.activeInHierarchy);
+        isNew = false;
         if (first == null)
+        {
+            isNew = true;
             first = CreateNewObject();
+        }
         return first;
     }
     protected T CreateNewObject()

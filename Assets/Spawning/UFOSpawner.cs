@@ -13,22 +13,24 @@ public sealed class UFOSpawner : Spawner<UFOAI>
     public override UFOAI Spawn(PoolObjectConfiguration config)
     {
         var ufo = base.Spawn(config);
-        ufo.Despawned += (s, e) => _lastMeasuredTime = Time.time;
+        if (config.IsNew)
+            ufo.Despawned += (s, e) => _lastMeasuredTime = Time.time;
         return ufo;
     }
     private void GenerateCooldown()
     {
         _nextCooldown = Random.Range(_minCooldown, _maxCooldown);
     }
-    private void OnEnable()
+    protected override void Awake()
     {
+        base.Awake();
         GenerateCooldown();
     }
     private void FixedUpdate()
     {
         if (Time.time - _lastMeasuredTime > _nextCooldown)
         {
-            Spawn(null);
+            Spawn(new PoolObjectConfiguration());
             _lastMeasuredTime = float.PositiveInfinity;
         }
     }
