@@ -4,45 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class Bullet : PoolObject
+[RequireComponent(typeof(Moving))]
+public class Bullet : SelfDestroyingPoolObject
 {
-    [SerializeField] private float _speed;
-    private float _lifetime;
-    private Coroutine _selfDestroying;
-
-    public event EventHandler Deinitialized;
-
-    public void Initialize(BulletConfigurationDTO config)
+    public class Configuration : PoolObjectConfiguration
     {
-        gameObject.SetActive(true);
-        _selfDestroying = StartCoroutine(SelfDestroyingRoutine());
+        public Color Color;
+        public Vector3 Position;
+        public Vector3 Direction;
+    }
 
-        GetComponent<MeshRenderer>().material.color = config.Color;
+    [SerializeField] private float _speed; 
+    private Moving _moving;
+
+    public override void Configure(PoolObjectConfiguration commonConfig)
+    {
+        var config = commonConfig as Configuration;
         transform.position = config.Position;
-        transform.up = config.Direction;
+        _moving.MovingDirection = config.Direction * _speed;
     }
-    public void Deinitialize()
-    {
-        gameObject.SetActive(false);
-        if (_selfDestroying != null)
-        {
-            StopCoroutine(_selfDestroying);
-            _selfDestroying = null;
-        }
 
-        Deinitialized?.Invoke(this, null);
-    }
-    private IEnumerator SelfDestroyingRoutine()
+    private void Awake()
     {
-        yield return new WaitForSeconds(_lifetime);
-        Deinitialize();
-    }
-    private void OnEnable()
-    {
+        _moving = GetComponent<Moving>();
         _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime * 2;
-    }
-    private void FixedUpdate()
-    {
-        transform.position += transform.up * _speed;
     }
 }

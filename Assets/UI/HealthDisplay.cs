@@ -6,13 +6,13 @@ using UnityEngine;
 public class HealthDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject _heartPrefab;
-    [SerializeField] private Viable _target;
+    [SerializeField] private Health _target;
     private List<GameObject> _hearts;
 
     private void Start()
     {
         _hearts = new List<GameObject>();
-        _target.HealthChanged += OnHealthChanged;
+        _target.ValueChanged += OnHealthChanged;
     }
 
     private void AddHeart()

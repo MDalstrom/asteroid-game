@@ -7,7 +7,7 @@ public abstract class Pool<T> : MonoBehaviour where T : PoolObject
     [SerializeField] protected GameObject _prefab;
     private List<T> _list;
 
-    public void Spawn(PoolObject.Configuration config)
+    public void Spawn(PoolObjectConfiguration config)
     {
         var spawned = GetAvailableObject();
         spawned.Configure(config);

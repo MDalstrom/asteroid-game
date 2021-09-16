@@ -10,9 +10,14 @@ public class Health : MonoBehaviour
 
     public bool IsInvincible { get; set; }
 
-    public event EventHandler<int> Damaged;
+    public event EventHandler<int> ValueChanged;
     public event EventHandler Died;
 
+    public void Regen()
+    {
+        _value = _max;
+        ValueChanged?.Invoke(this, _value);
+    }
     /// <summary>
     /// Returns true, if the damage resulted in death
     /// </summary>
@@ -21,7 +26,7 @@ public class Health : MonoBehaviour
         if (IsInvincible)
             return false;
         _value--;
-        Damaged?.Invoke(this, _value);
+        ValueChanged?.Invoke(this, _value);
         if (_value == 0)
         {
             Died?.Invoke(this, null);
