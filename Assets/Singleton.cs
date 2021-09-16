@@ -1,63 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-// :)
-public abstract class Singleton<T> : MonoBehaviour where T : Component
+public class Singleton : MonoBehaviour
 {
-
-    #region Fields
-
-    /// <summary>
-    /// The instance.
-    /// </summary>
-    private static T instance;
-
-    #endregion
-
-    #region Properties
-
-    /// <summary>
-    /// Gets the instance.
-    /// </summary>
-    /// <value>The instance.</value>
-    public static T Instance
+    private static List<MonoBehaviour> _instances;
+    public static T GetInstance<T>() where T : MonoBehaviour
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<T>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = typeof(T).Name;
-                    instance = obj.AddComponent<T>();
-                }
-            }
-            return instance;
-        }
+        return _instances.First(x => x.GetType() == typeof(T)) as T;
     }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// Use this for initialization.
-    /// </summary>
-    protected virtual void Awake()
+    
+    [SerializeField] private MonoBehaviour _target;
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this as T;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (_instances == null)
+            _instances = new List<MonoBehaviour>();
+        _instances.Add(_target);
     }
-
-    #endregion
-
 }
