@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UfoAI : MonoBehaviour
+[RequireComponent(typeof(Moving))]
+[RequireComponent(typeof(Shooting))]
+public class UFOAI : PoolObject
 {
-    [SerializeField] private float _speed;
-    private Vector3 _movementDirection;
-
     private void Start()
     {
-        _movementDirection = Vector2.right * _speed * ((Random.Range(0f, 1f) > 0.5f) ? 1 : (-1));
+        GetComponent<Moving>().SetDirection(Vector2.right * ((Random.Range(0f, 1f) > 0.5f) ? 1 : (-1)));
     }
-    private void FixedUpdate()
+
+    public override void Configure(PoolObjectConfiguration config)
     {
-        transform.position += _movementDirection;
+
     }
 }

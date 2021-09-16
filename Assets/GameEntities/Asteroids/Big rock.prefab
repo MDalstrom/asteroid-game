@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 2655129026128886296}
   - component: {fileID: 923809917260135081}
   - component: {fileID: 4985714587762642628}
-  - component: {fileID: 1665219567032806567}
   - component: {fileID: 5076010608961693403}
-  - component: {fileID: -3438873700853410394}
+  - component: {fileID: 5419496612992360677}
   m_Layer: 0
   m_Name: Big rock
   m_TagString: Untagged
@@ -98,24 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1665219567032806567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4331807525852497406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82fdee3b3ab3caa44a6304a4c512cf66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialHealth: 1
-  _particlePrefab: {fileID: 3339546050225176083, guid: 057bb97b472f13f479ce9df6dd550dc6, type: 3}
-  _particlesCount: 2
-  _spreadingAngle: 45
-  _minSpeed: 0.005
-  _maxSpeed: 0.01
 --- !u!54 &5076010608961693403
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &-3438873700853410394
+--- !u!114 &5419496612992360677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,8 +122,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4331807525852497406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9aa91c28063c044bb36cab17e1803d, type: 3}
+  m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worth: 20
-  _wealth: 0

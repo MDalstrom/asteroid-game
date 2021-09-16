@@ -18,6 +18,10 @@ public class Moving : MonoBehaviour
     {
         transform.Rotate(Vector3.back * Mathf.Clamp(angle, -_rotatingSpeed, _rotatingSpeed));
     }
+    public void SetDirection(Vector2 direction)
+    {
+        MovingDirection = direction * _maxSpeed;
+    }
     public void AddAcceleration()
     {
         MovingDirection += transform.up * _acceleration;

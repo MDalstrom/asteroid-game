@@ -474,6 +474,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1294175216}
+  - component: {fileID: 1294175217}
+  - component: {fileID: 1294175215}
   m_Layer: 0
   m_Name: Spawners
   m_TagString: Untagged
@@ -481,6 +483,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1294175215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294175214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe0f72373b3ab3468a600f4e22a012e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 7098188099684049731, guid: c5798c2971a06f24c8051081f763e630, type: 3}
+  _needSpawnOnWidth: 0
+  _widthPercentage: 0
+  _needSpawnOnHeight: 1
+  _heightPercentage: 0.8
+  _maxCooldown: 3
+  _minCooldown: 1
 --- !u!4 &1294175216
 Transform:
   m_ObjectHideFlags: 0
@@ -495,6 +516,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1294175217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294175214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838967500d4e12c41958c4d5ff2a1b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _needSpawnOnWidth: 0
+  _widthPercentage: 0
+  _needSpawnOnHeight: 0
+  _heightPercentage: 0
 --- !u!1 &1517848771
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,26 +695,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2567319850254354127, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _bulletColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567319850254354127, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _bulletColor.b
-      value: 0.33490568
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567319850254354127, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _bulletColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567319850254354127, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _bulletColor.r
-      value: 0.33490568
-      objectReference: {fileID: 0}
-    - target: {fileID: 2567319850254354127, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _bulletSpawnOffset.y
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 5528440331840831010, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -724,18 +742,6 @@ PrefabInstance:
     - target: {fileID: 5528440331840831015, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
       propertyPath: m_Name
       value: Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 9116029286815686099, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _maxSpeed
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 9116029286815686099, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _acceleration
-      value: 0.0005
-      objectReference: {fileID: 0}
-    - target: {fileID: 9116029286815686099, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}
-      propertyPath: _rotatingSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f6ad6f7a9b688246a884acfb9b7c660, type: 3}

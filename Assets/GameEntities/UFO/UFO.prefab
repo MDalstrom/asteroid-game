@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9073983046018609476}
-  - component: {fileID: 8316071543716954426}
   - component: {fileID: 7875786102764062410}
-  - component: {fileID: -8678240730478157495}
+  - component: {fileID: 4159489391175085881}
+  - component: {fileID: 1191613177164769535}
+  - component: {fileID: 8400097607587416840}
+  - component: {fileID: 5482365673883688396}
   m_Layer: 0
   m_Name: UFO
   m_TagString: Untagged
@@ -34,20 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8316071543716954426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7098188099684049731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edbb01fb97e3b8e4d8ae7350727dda87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialHealth: 1
-  _speed: 0.1
 --- !u!136 &7875786102764062410
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -62,7 +50,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-8678240730478157495
+--- !u!114 &4159489391175085881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,11 +59,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 7098188099684049731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9aa91c28063c044bb36cab17e1803d, type: 3}
+  m_Script: {fileID: 11500000, guid: 84a3039201a0ecf44b13f1b33e8fc3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worth: 200
-  _wealth: 0
+--- !u!114 &1191613177164769535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098188099684049731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184c55e9b6f5fab438db6b1b17e92612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpeed: 0.05
+  _rotatingSpeed: 0
+  _acceleration: 0
+  _needFriction: 0
+  _frictionalDeceleration: 0
+--- !u!114 &8400097607587416840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098188099684049731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cffbebcaef5dd554cb97ffd8582f8581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletColor: {r: 0.6698113, g: 0.1990477, b: 0.1990477, a: 1}
+  _shootingCooldown: 0.3333
+  _bulletSpawnOffset: {x: 0, y: 0.25, z: 0}
+--- !u!54 &5482365673883688396
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098188099684049731}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 96
+  m_CollisionDetection: 0
 --- !u!1 &7967831782664062000
 GameObject:
   m_ObjectHideFlags: 0
