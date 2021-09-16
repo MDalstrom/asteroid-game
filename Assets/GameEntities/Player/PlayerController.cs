@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Viable))]
-[RequireComponent(typeof(InvincibleViability))]
-[RequireComponent(typeof(Shootable))]
+[RequireComponent(typeof(Moving))]
+[RequireComponent(typeof(Shooting))]
 public class PlayerController : MonoBehaviour
 {
-    private Movable _movable;
-    private Shootable _shootable;
     private IHandlingStratege _stratege;
+    private Moving _moving;
+    private Shooting _shooting;
 
     #region Handling
     public void ChangeHandlingStratege(string strategeName)
@@ -26,22 +25,22 @@ public class PlayerController : MonoBehaviour
     }
     private void OnMovingPressed()
     {
-        _movable.AddAcceleration();
+        _moving.AddAcceleration();
     }
     private void OnRotationPressed(object sender, float angle)
     {
-        _movable.Rotate(angle);
+        _moving.Rotate(angle);
     }
     private void OnShootingPressed()
     {
-        _shootable.Shoot();
+        _shooting.Shoot(transform.up);
     }
     #endregion
 
     private void Start()
     {
-        _movable = GetComponent<Movable>();
-        _shootable = GetComponent<Shootable>();
+        _moving = GetComponent<Moving>();
+        _shooting = GetComponent<Shooting>();
 
         ChangeHandlingStratege(new MouseStratege());
     }
