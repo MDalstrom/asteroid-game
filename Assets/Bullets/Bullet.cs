@@ -9,9 +9,9 @@ public class Bullet : SelfDestroyingPoolObject
 {
     public class Configuration : PoolObjectConfiguration
     {
-        public Color Color;
-        public Vector3 Position;
-        public Vector3 Direction;
+        public Color Color { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Direction { get; set; }
     }
 
     [SerializeField] private float _speed; 

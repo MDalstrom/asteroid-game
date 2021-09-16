@@ -13,7 +13,7 @@ public class Shooting : MonoBehaviour
     {
         if ((Time.time - _lastShotTime) > _shootingCooldown)
         {
-            
+            Singleton.GetInstance<BulletsPool>().Spawn(new BulletsPool.Configuration { });
             _lastShotTime = Time.time;
         }
     }
