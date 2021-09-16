@@ -7,11 +7,12 @@ public abstract class Pool<T> : MonoBehaviour where T : PoolObject
     [SerializeField] protected GameObject _prefab;
     private List<T> _list;
 
-    public void Spawn(PoolObjectConfiguration config)
+    public virtual T Spawn(PoolObjectConfiguration config)
     {
         var spawned = GetAvailableObject();
         spawned.Configure(config);
         spawned.Spawn();
+        return spawned;
     }
 
     private T GetAvailableObject()
@@ -31,7 +32,7 @@ public abstract class Pool<T> : MonoBehaviour where T : PoolObject
         return component;
     }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _list = new List<T>();
     }

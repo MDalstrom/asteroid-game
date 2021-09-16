@@ -21,7 +21,7 @@ public sealed class UFOSpawner : MonoBehaviour
     {
         if (Time.time - _lastMeasuredTime > _nextCooldown)
         {
-            ufo.Dead += (s, e) => _lastMeasuredTime = Time.time;
+            new Health().Died += (s, e) => _lastMeasuredTime = Time.time;
             _lastMeasuredTime = float.PositiveInfinity;
         }
     }

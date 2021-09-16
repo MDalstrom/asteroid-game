@@ -13,13 +13,7 @@ public class Shooting : MonoBehaviour
     {
         if ((Time.time - _lastShotTime) > _shootingCooldown)
         {
-            BulletsPool.Instance.Shoot(new BulletConfigurationDTO
-            {
-                Color = _bulletColor,
-                Position = transform.TransformDirection(_bulletSpawnOffset).normalized + transform.position,
-                Direction = direction,
-                Source = gameObject
-            });
+            
             _lastShotTime = Time.time;
         }
     }

@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Spawner<T> : MonoBehaviour
+public abstract class Spawner<T> : Pool<T> where T : PoolObject
 {
-    [SerializeField] protected GameObject _prefab;
     [Header("Spawn Settings")]
     [SerializeField] private bool _needSpawnOnWidth;
     [SerializeField] [Range(0f, 1f)] private float _widthPercentage;
@@ -13,19 +12,18 @@ public abstract class Spawner<T> : MonoBehaviour
     private float _maxHeight;
     private float _maxWidth;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         var camera = Camera.main;
         _maxHeight = camera.orthographicSize;
         _maxWidth = Screen.width * camera.orthographicSize / Screen.height;
     }
-    protected virtual T Spawn()
+    public override T Spawn(PoolObjectConfiguration config)
     {
-        var targetObject = Instantiate(_prefab);
-        targetObject.transform.position = GetRandomPos();
-
-        var target = targetObject.GetComponent<T>();
-        return target;
+        var spawned = base.Spawn(config);
+        spawned.transform.position = GetRandomPos();
+        return spawned;
     }
 
     private Vector2 GetRandomPos()
