@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class UFOSpawner : Spawner<UFO>
+public sealed class UFOSpawner : MonoBehaviour
 {
     [Header("Timing Settings")]
     [SerializeField] [Min(0)] private float _maxCooldown = 40f;
@@ -21,7 +21,6 @@ public sealed class UFOSpawner : Spawner<UFO>
     {
         if (Time.time - _lastMeasuredTime > _nextCooldown)
         {
-            var ufo = Spawn();
             ufo.Dead += (s, e) => _lastMeasuredTime = Time.time;
             _lastMeasuredTime = float.PositiveInfinity;
         }
