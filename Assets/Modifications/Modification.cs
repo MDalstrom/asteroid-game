@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IModification
+public abstract class Modification<T> : MonoBehaviour where T : Capable
 {
-    void Modify();
-}
-public abstract class Modification<T> : MonoBehaviour, IModification
-{
-    public abstract void Modify();
+    public abstract void Modify(T sender);
 }

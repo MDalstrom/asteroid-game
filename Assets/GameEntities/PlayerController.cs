@@ -3,11 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Singleton<PlayerController>
+[RequireComponent(typeof(Viable))]
+[RequireComponent(typeof(InvincibleViability))]
+[RequireComponent(typeof(Movable))]
+[RequireComponent(typeof(Shootable))]
+[RequireComponent(typeof(ScoreHolder))]
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Ship _player;
+    private Movable _movable;
+    private Shootable _shootable;
     private IHandlingStratege _stratege;
 
+    #region Handling
     public void ChangeHandlingStratege(string strategeName)
     {
         _stratege = Activator.CreateInstance(Type.GetType(strategeName)) as IHandlingStratege;
@@ -19,27 +26,30 @@ public class PlayerController : Singleton<PlayerController>
         _stratege.RotationPressed += OnRotationPressed;
         _stratege.ShootingPressed += OnShootingPressed;
     }
-
     private void OnMovingPressed()
     {
-        _player.AddAcceleration();
+        _movable.AddAcceleration();
     }
     private void OnRotationPressed(object sender, float angle)
     {
-        _player.Rotate(angle);
+        _movable.Rotate(angle);
     }
     private void OnShootingPressed()
     {
-        _player.Shoot();
+        _shootable.Shoot();
     }
+    #endregion
 
     private void Start()
     {
+        _movable = GetComponent<Movable>();
+        _shootable = GetComponent<Shootable>();
+
         ChangeHandlingStratege(new MouseStratege());
     }
     private void Update()
     {
-        _stratege.Update(_player.gameObject);
+        _stratege.Update(gameObject);
     }
 
 }

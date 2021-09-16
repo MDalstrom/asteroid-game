@@ -1,31 +1,26 @@
 using System;
 using UnityEngine;
 
-public class Viable : MonoBehaviour
+public class Viable : Capable
 {
-    [SerializeField] private int _initialHealth;
-    protected EventArgs _deadEventArgs;
-    private int _currentHealth;
+    [SerializeField] private int _health;
+    public int Health { set => _health = value; get => _health; }
     public event EventHandler<int> HealthChanged;
-    public event EventHandler<EventArgs> Dead;
+    public event EventHandler Dead;
     
     /// <summary>
     /// Returns true, if the damage resulted in death
     /// </summary>
     public virtual bool Damage()
     {
-        _currentHealth--;
-        HealthChanged?.Invoke(this, _currentHealth);
-        if (_currentHealth == 0)
+        ApplyModifications();
+        _health--;
+        HealthChanged?.Invoke(this, _health);
+        if (_health == 0)
         {
-            Dead?.Invoke(this, _deadEventArgs);
-            Destroy(gameObject);
+            Dead?.Invoke(this, null);
             return true;
         }
         return false;
-    }
-    private void Start()
-    {
-        _currentHealth = _initialHealth;
     }
 }

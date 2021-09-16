@@ -4,83 +4,20 @@ using UnityEngine;
 using UnityEditor;
 
 [RequireComponent(typeof(ScoreHolder))]
-public class Ship : Viable
+public class Ship : MonoBehaviour
 {
-    [SerializeField] private float _maxSpeed;
-    [SerializeField] private float _rotatingSpeed;
-    [SerializeField] private float _acceleration;
-    private Vector3 _movingDirection;
-
-    /// i know it's said there's no friction, but (for me) game seems unplayable without it
-    /// in addition, origin has friction
-    [SerializeField] private bool _needFriction;
-    [SerializeField] private float _frictionalDeceleration;
-
-    [SerializeField] private float _shootingCooldown = 0.3333f;
-    /// just looks cool and was easy to make
-    [SerializeField] private bool _needKnockback;
-    [SerializeField] private float _knockbackForce;
-    [SerializeField] private Vector3 _bulletSpawnOffset;
-    private float _lastShotTime;
-
-    private Renderer _renderer;
     private Color _defaultColor;
     private bool _isInvincible = true;
     [SerializeField] private float _blinkingFrequency = 0.5f;
 
-    private ScoreHolder _scoreHolder;
-
-    public void Shoot()
+    private void Start()
     {
-        if ((Time.time - _lastShotTime) > _shootingCooldown)
-        {
-            BulletsPool.Instance.Shoot(new BulletConfigurationDTO
-            {
-                Color = Color.green,
-                Position = transform.TransformDirection(_bulletSpawnOffset).normalized + transform.position,
-                Direction = transform.up,
-                Source = _scoreHolder
-            });
-            _lastShotTime = Time.time;
-        }
-
-        if (_needKnockback)
-            _movingDirection -= transform.up * _knockbackForce;
-    }
-    public void Rotate(float angle)
-    {
-        transform.Rotate(Vector3.back * Mathf.Clamp(angle, -_rotatingSpeed, _rotatingSpeed));
-    }
-    public void AddAcceleration()
-    {
-        _movingDirection += transform.up * _acceleration;
-        _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
-    }
-    public override bool Damage()
-    {
-        if (_isInvincible)
-            return false;
-        else
-            return base.Damage();
-    }
-    protected override void OnViableCollided(Viable otherViable, Collision collision)
-    {
-        Damage();
-        _movingDirection -= (collision.contacts[0].point - transform.position) * _knockbackForce;
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        _scoreHolder = GetComponent<ScoreHolder>();
         _renderer = GetComponent<Renderer>();
         _defaultColor = _renderer.material.color;
     }
     private void FixedUpdate()
     {
-        transform.position += _movingDirection;
-        if (_needFriction)
-            _movingDirection -= _movingDirection.normalized * _frictionalDeceleration;
+        
 
         if (_isInvincible)
         {

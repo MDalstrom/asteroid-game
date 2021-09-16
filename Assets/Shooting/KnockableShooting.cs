@@ -9,7 +9,7 @@ public class KnockableShooting : Modification<Shootable>
     [SerializeField] private float _knockbackForce;
     private Movable _movable;
 
-    public override void Modify()
+    public override void Modify(Shootable sender)
     {
         _movable.AddImpulse(_movable.MovingDirection * -_knockbackForce);
     }
