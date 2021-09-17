@@ -3,14 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolObjectConfiguration
-{
-    public bool IsNew { get; set; }
-}
+
 public abstract class PoolObject : MonoBehaviour
 {
-    public abstract void Configure(PoolObjectConfiguration config);
-    public virtual void Spawn()
+    public virtual void Spawn(PoolObjectConfiguration config)
     {
         gameObject.SetActive(true);
     }

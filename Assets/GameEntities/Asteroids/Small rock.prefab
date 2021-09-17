@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8883647313458429105}
   - component: {fileID: 7394830273579767008}
   - component: {fileID: 8938980536157321003}
-  - component: {fileID: 5510878929308807051}
   - component: {fileID: 5654059504017589655}
-  - component: {fileID: -87209854723519000}
+  - component: {fileID: 5360581112011832245}
+  - component: {fileID: 891200082135697258}
   m_Layer: 0
   m_Name: Small rock
   m_TagString: Untagged
@@ -98,24 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5510878929308807051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129196341227878728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82fdee3b3ab3caa44a6304a4c512cf66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialHealth: 1
-  _particlePrefab: {fileID: 0}
-  _particlesCount: 0
-  _spreadingAngle: 45
-  _minSpeed: 0.005
-  _maxSpeed: 0.01
 --- !u!54 &5654059504017589655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &-87209854723519000
+--- !u!114 &5360581112011832245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,8 +123,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1129196341227878728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9aa91c28063c044bb36cab17e1803d, type: 3}
+  m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worth: 100
-  _wealth: 0
+  _particlePrefab: {fileID: 0}
+  _particlesCount: 0
+  _particlesSpreadingAngle: 0
+--- !u!114 &891200082135697258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129196341227878728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184c55e9b6f5fab438db6b1b17e92612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpeed: 0
+  _rotatingSpeed: 0
+  _acceleration: 0
+  _needFriction: 0
+  _frictionalDeceleration: 0

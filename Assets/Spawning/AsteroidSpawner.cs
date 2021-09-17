@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AsteroidSpawner : Spawner<Asteroid>
 {
-    [SerializeField] private int _initialWave;
+    [SerializeField] private int _initialWave = 2;
     private int _currentWave;
     private int _rocksRemained;
 
@@ -17,19 +17,28 @@ public class AsteroidSpawner : Spawner<Asteroid>
             spawned.Despawned += OnAsteroidDespawned;
         return spawned;
     }
-    private void SpawnNewWave()
+    private void SpawnWave()
     {
         _currentWave++;
-        _rocksRemained = _currentWave * 7;
+        _rocksRemained = _currentWave;
+        for (int i = 0; i < _currentWave; i++)
+            Spawn(new Asteroid.Configuration
+            {
+                IsParticle = false,
+                IsNew = true
+            });
     }
     private void OnAsteroidDespawned(object sender, EventArgs e)
     {
         _rocksRemained--;
         if (_rocksRemained == 0)
-            SpawnNewWave();
+            SpawnWave();
     }
-    private void Start()
+
+    protected override void Awake()
     {
-        Debug.Log(Enumerable.Repeat(UnityEngine.Random.Range(0, 10), 10));
+        base.Awake();
+        _currentWave = _initialWave;
+        SpawnWave();
     }
 }

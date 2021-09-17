@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7151578941503033893}
   - component: {fileID: 647383438050987487}
   - component: {fileID: 348047554236486277}
+  - component: {fileID: 5813532752108971226}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1ef1a934add664da0a78ecd9d4dfb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.2
+  _lifetime: 0
 --- !u!54 &348047554236486277
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,3 +127,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5813532752108971226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833323099463383893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184c55e9b6f5fab438db6b1b17e92612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpeed: 0.25
+  _rotatingSpeed: 0
+  _acceleration: 0
+  _needFriction: 0
+  _frictionalDeceleration: 0

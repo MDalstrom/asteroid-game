@@ -5,6 +5,7 @@ using UnityEngine;
 public class Moving : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed;
+    public float MaxSpeed => _maxSpeed;
     [SerializeField] private float _rotatingSpeed;
     [SerializeField] private float _acceleration;
 
@@ -12,29 +13,29 @@ public class Moving : MonoBehaviour
     [SerializeField] private bool _needFriction;
     [SerializeField] private float _frictionalDeceleration;
 
-    public Vector3 MovingDirection { get; set; }
+    public Vector3 _movingDirection { get; set; }
 
     public void Rotate(float angle)
     {
         transform.Rotate(Vector3.back * Mathf.Clamp(angle, -_rotatingSpeed, _rotatingSpeed));
     }
+    public void SetSpeed(float newSpeed)
+    {
+        _maxSpeed = newSpeed;
+    }
     public void SetDirection(Vector2 direction)
     {
-        MovingDirection = direction * _maxSpeed;
+        _movingDirection = direction * _maxSpeed;
     }
     public void AddAcceleration()
     {
-        MovingDirection += transform.up * _acceleration;
-        MovingDirection = Vector3.ClampMagnitude(MovingDirection, _maxSpeed);
-    }
-    public void AddImpulse(Vector3 impulse)
-    {
-        MovingDirection += impulse;
+        _movingDirection += transform.up * _acceleration;
+        _movingDirection = Vector3.ClampMagnitude(_movingDirection, _maxSpeed);
     }
     private void FixedUpdate()
     {
-        transform.position += MovingDirection;
+        transform.position += _movingDirection;
         if (_needFriction)
-            MovingDirection -= MovingDirection.normalized * _frictionalDeceleration;
+            _movingDirection -= _movingDirection.normalized * _frictionalDeceleration;
     }
 }

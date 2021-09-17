@@ -14,15 +14,16 @@ public class Bullet : SelfDestroyingPoolObject
         public Vector3 Direction { get; set; }
     }
 
-    [SerializeField] private float _speed; 
     private Moving _moving;
     private Renderer _renderer;
 
-    public override void Configure(PoolObjectConfiguration commonConfig)
+    public override void Spawn(PoolObjectConfiguration baseConfig)
     {
-        var config = commonConfig as Configuration;
+        base.Spawn(baseConfig);
+
+        var config = baseConfig as Configuration;
         transform.position = config.Position;
-        _moving.MovingDirection = config.Direction * _speed;
+        _moving.SetDirection(config.Direction);
         _renderer.material.color = config.Color;
     }
 
@@ -30,6 +31,6 @@ public class Bullet : SelfDestroyingPoolObject
     {
         _moving = GetComponent<Moving>();
         _renderer = GetComponent<Renderer>();
-        _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _speed * Time.fixedDeltaTime * 2;
+        _lifetime = Screen.width * Camera.main.orthographicSize / Screen.height / _moving.MaxSpeed * Time.fixedDeltaTime * 2;
     }
 }

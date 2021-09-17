@@ -2,8 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class PoolObjectConfiguration
+{
+    public bool IsNew { get; set; }
+}
 public abstract class Pool<T> : MonoBehaviour where T : PoolObject
 {
+    
     [SerializeField] protected GameObject _prefab;
     private List<T> _list;
 
@@ -11,26 +16,25 @@ public abstract class Pool<T> : MonoBehaviour where T : PoolObject
     {
         if (config == null)
             throw new System.Exception($"{GetType()}'s configuration cannot be null");
-
-        var spawned = GetAvailableObject(out var isNew);
-        config.IsNew = isNew;
-        spawned.Configure(config);
-        spawned.Spawn();
-        return spawned;
+        var availableObject = GetAvailableObject(config);
+        availableObject.Spawn(config);
+        availableObject.Despawned += (s, e) => OnObjectDespawned(s as T);
+        return availableObject;
     }
+    public virtual void OnObjectDespawned(T sender) { }
 
-    private T GetAvailableObject(out bool isNew)
+    private T GetAvailableObject(PoolObjectConfiguration config)
     {
         var first = _list.FirstOrDefault(x => !x.gameObject.activeInHierarchy);
-        isNew = false;
+        config.IsNew = false;
         if (first == null)
         {
-            isNew = true;
+            config.IsNew = true;
             first = CreateNewObject();
         }
         return first;
     }
-    protected T CreateNewObject()
+    private T CreateNewObject()
     {
         var newObject = Instantiate(_prefab, transform);
         newObject.name = $"{typeof(T).Name} #{_list.Count + 1}";

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 790782610728440242}
   - component: {fileID: 5205659392870131229}
   - component: {fileID: 6084105395753276769}
-  - component: {fileID: 6941158429840683785}
   - component: {fileID: 7067163142030808084}
-  - component: {fileID: -1199004568463898179}
+  - component: {fileID: 4916460955612462069}
+  - component: {fileID: -6989264664766722737}
   m_Layer: 0
   m_Name: Mid rock
   m_TagString: Untagged
@@ -98,24 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6941158429840683785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3339546050225176083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82fdee3b3ab3caa44a6304a4c512cf66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialHealth: 1
-  _particlePrefab: {fileID: 1129196341227878728, guid: be46eb5ced5b1bb4a9bc5368bfea97cc, type: 3}
-  _particlesCount: 2
-  _spreadingAngle: 45
-  _minSpeed: 0.005
-  _maxSpeed: 0.01
 --- !u!54 &7067163142030808084
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &-1199004568463898179
+--- !u!114 &4916460955612462069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,8 +123,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3339546050225176083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9aa91c28063c044bb36cab17e1803d, type: 3}
+  m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worth: 50
-  _wealth: 0
+  _particlePrefab: {fileID: 1129196341227878728, guid: be46eb5ced5b1bb4a9bc5368bfea97cc, type: 3}
+  _particlesCount: 2
+  _particlesSpreadingAngle: 45
+--- !u!114 &-6989264664766722737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3339546050225176083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184c55e9b6f5fab438db6b1b17e92612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpeed: 0
+  _rotatingSpeed: 0
+  _acceleration: 0
+  _needFriction: 0
+  _frictionalDeceleration: 0

@@ -125,3 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _particlePrefab: {fileID: 3339546050225176083, guid: 057bb97b472f13f479ce9df6dd550dc6, type: 3}
+  _particlesCount: 2
+  _particlesSpreadingAngle: 45

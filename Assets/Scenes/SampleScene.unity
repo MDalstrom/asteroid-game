@@ -533,6 +533,7 @@ MonoBehaviour:
   _widthPercentage: 0
   _needSpawnOnHeight: 0
   _heightPercentage: 0
+  _initialWave: 0
 --- !u!1 &1517848771
 GameObject:
   m_ObjectHideFlags: 0

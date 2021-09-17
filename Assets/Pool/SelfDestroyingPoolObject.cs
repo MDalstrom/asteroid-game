@@ -6,9 +6,9 @@ public abstract class SelfDestroyingPoolObject : PoolObject
 {
     [SerializeField] protected float _lifetime;
     private Coroutine _despawning;
-    public override void Spawn()
+    public override void Spawn(PoolObjectConfiguration config)
     {
-        base.Spawn();
+        base.Spawn(config);
         _despawning = StartCoroutine(DespawningRoutine());
     }
     public override void Despawn()
