@@ -15,6 +15,7 @@ public class Asteroid : PoolObject
     [Header("Moving")]
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _minSpeed;
+    private Moving _moving;
     [Header("Particles")]
     [SerializeField] private GameObject _particlePrefab;
     [SerializeField] private int _particlesCount;
@@ -22,20 +23,20 @@ public class Asteroid : PoolObject
     private List<Asteroid> _particles;
     private int _particlesRemained;
 
+
     public override void Spawn(PoolObjectConfiguration baseConfig)
     {
         gameObject.SetActive(true);
         var config = baseConfig as Asteroid.Configuration;
-        var moving = GetComponent<Moving>();
         if (config.IsParticle)
         {
-            moving.SetSpeed(config.Speed);
-            moving.SetDirection(config.Direction);
+            _moving.SetSpeed(config.Speed);
+            _moving.SetDirection(config.Direction);
         }
         else
         {
-            moving.SetSpeed(GetRandomSpeed());
-            moving.SetDirection(UnityEngine.Random.insideUnitCircle);
+            _moving.SetSpeed(GetRandomSpeed());
+            _moving.SetDirection(UnityEngine.Random.insideUnitCircle);
             SpawnParticles();
         }
         _particlesRemained = _particlesCount;
@@ -91,5 +92,9 @@ public class Asteroid : PoolObject
         _particlesRemained--;
         if (gameObject.activeInHierarchy == false && _particlesRemained == 0)
             base.Despawn();
+    }
+    private void Awake()
+    {
+        _moving = GetComponent<Moving>();
     }
 }
