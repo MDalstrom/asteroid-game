@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7394830273579767008}
   - component: {fileID: 8938980536157321003}
   - component: {fileID: 5654059504017589655}
+  - component: {fileID: -7323386702923272284}
   - component: {fileID: 5360581112011832245}
   - component: {fileID: 891200082135697258}
   m_Layer: 0
@@ -114,6 +115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-7323386702923272284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129196341227878728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b032eb821338247a1f19080f359eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5360581112011832245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSpeed: 0
+  _minSpeed: 0
   _particlePrefab: {fileID: 0}
   _particlesCount: 0
   _particlesSpreadingAngle: 0

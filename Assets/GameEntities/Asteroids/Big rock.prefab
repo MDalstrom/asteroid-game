@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 923809917260135081}
   - component: {fileID: 4985714587762642628}
   - component: {fileID: 5076010608961693403}
+  - component: {fileID: 7299539190789376771}
   - component: {fileID: 5419496612992360677}
   m_Layer: 0
   m_Name: Big rock
@@ -113,6 +114,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &7299539190789376771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331807525852497406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b032eb821338247a1f19080f359eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5419496612992360677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72529216c6b48f40b48cf5a6dc0f344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSpeed: 0
+  _minSpeed: 0
   _particlePrefab: {fileID: 3339546050225176083, guid: 057bb97b472f13f479ce9df6dd550dc6, type: 3}
   _particlesCount: 2
   _particlesSpreadingAngle: 45

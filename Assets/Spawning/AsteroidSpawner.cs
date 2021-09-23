@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class AsteroidSpawner : Spawner<Asteroid>
+public class AsteroidSpawner : Spawner<AsteroidAI>
 {
     [SerializeField] private int _initialWave = 2;
     private int _currentWave;
     private int _rocksRemained;
 
-    public override Asteroid Spawn(PoolObjectConfiguration config)
+    public override AsteroidAI Spawn(PoolObjectConfiguration config)
     {
         var spawned = base.Spawn(config);
         if (config.IsNew)
@@ -22,7 +22,7 @@ public class AsteroidSpawner : Spawner<Asteroid>
         _currentWave++;
         _rocksRemained = _currentWave;
         for (int i = 0; i < _currentWave; i++)
-            Spawn(new Asteroid.Configuration
+            Spawn(new AsteroidAI.Configuration
             {
                 IsParticle = false,
                 IsNew = true

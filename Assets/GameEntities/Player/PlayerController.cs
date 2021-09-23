@@ -48,5 +48,8 @@ public class PlayerController : MonoBehaviour
     {
         _stratege.Update(gameObject);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
 
+    }
 }

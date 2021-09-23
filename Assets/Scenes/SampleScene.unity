@@ -528,12 +528,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838967500d4e12c41958c4d5ff2a1b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 0}
-  _needSpawnOnWidth: 0
-  _widthPercentage: 0
-  _needSpawnOnHeight: 0
-  _heightPercentage: 0
-  _initialWave: 0
+  _prefab: {fileID: 4331807525852497406, guid: e226a87f601888842b5df8849fe1a4f8, type: 3}
+  _needSpawnOnWidth: 1
+  _widthPercentage: 1
+  _needSpawnOnHeight: 1
+  _heightPercentage: 1
+  _initialWave: 2
 --- !u!1 &1517848771
 GameObject:
   m_ObjectHideFlags: 0
